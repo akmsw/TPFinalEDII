@@ -1,6 +1,6 @@
-;                   TRABAJO PR¡CTICO FINAL INTEGRADOR
-;               FCEFyN - UNC - INGENIERÕA EN COMPUTACI”N
-;                        ELECTR”NICA DIGITAL II
+;                   TRABAJO PR√ÅCTICO FINAL INTEGRADOR
+;               FCEFyN - UNC - INGENIER√çA EN COMPUTACI√ìN
+;                        ELECTR√ìNICA DIGITAL II
 ;
 ;                          "TECLADO MUSICAL"
 ;
@@ -8,22 +8,22 @@
 ;		*BONINO, FRANCISCO IGNACIO  -	41279796
 
 
-;-------------------LIBRERÕAS---------------------------------------------------
+;-------------------LIBRER√çAS---------------------------------------------------
 
 	#INCLUDE    <P16F887.INC>
 
 	    LIST    P = 16F887
 
-;-------------------CONFIGURACI”N PIC-------------------------------------------
+;-------------------CONFIGURACI√ìN PIC-------------------------------------------
 
 	__CONFIG    _CONFIG1, _FOSC_INTRC_NOCLKOUT & _WDTE_OFF & _PWRTE_OFF & _MCLRE_ON & _CP_OFF & _CPD_OFF & _BOREN_ON & _IESO_ON & _FCMEN_ON & _LVP_ON
 	__CONFIG    _CONFIG2, _BOR4V_BOR40V & _WRT_OFF
 
-;-------------------DECLARACI”N DE VARIABLES------------------------------------
+;-------------------DECLARACI√ìN DE VARIABLES------------------------------------
 
 	  COMPAS    EQU	    0x20	    ;Variable que cuenta la cantidad de compases que pasaron.
 	    LOOP    EQU	    0x21	    ;Variable para bucles.
-       METRONOMO    EQU	    0x23	    ;Variable para prender/apagar el metrÛnomo.
+       METRONOMO    EQU	    0x23	    ;Variable para prender/apagar el metr√≥nomo.
       PORTB_TEMP    EQU	    0x24	    ;Variable que almacena temporalmente la lectura de PORTB.
 	      I1    EQU	    0x25
 	      I2    EQU	    0x26
@@ -48,11 +48,11 @@
 		    ORG	    0x04
 		    GOTO    RUT_IN
 
-;-------------------CONFIGURACI”N REGISTROS-------------------------------------
+;-------------------CONFIGURACI√ìN REGISTROS-------------------------------------
 
 		    ORG	    0x05
       CONFIGURAR    MOVLW   B'11011000'	    ;Configuramos INTCON habilitando GIE, INTE, RBIE y PEIE
-		    MOVWF   INTCON	    ;(todas las fuentes de interrupciÛn).
+		    MOVWF   INTCON	    ;(todas las fuentes de interrupci√≥n).
 		    BANKSEL OPTION_REG
 		    MOVLW   B'10000111'	    ;Configuramos OPTION_REG deshabilitando resistencias de
 		    MOVWF   OPTION_REG	    ;pull-up en PORTB, con prescaler en 1:256 para TMR0.
@@ -60,25 +60,25 @@
 		    MOVLW   B'11111110'
 		    MOVWF   IOCB
 
-;------------------CONFIGURACI”N RX PUERTO SERIE--------------------------------
+;------------------CONFIGURACI√ìN RX PUERTO SERIE--------------------------------
 
-		    BANKSEL RCSTA	    ;CONFIGURACI”N PARA RECEPCI”N
+		    BANKSEL RCSTA	    ;CONFIGURACI√ìN PARA RECEPCI√ìN
 		    BCF	    RCSTA,SPEN      ;Desactivamos el puerto serie al inicio del programa.
-		    BCF	    RCSTA,RX9       ;La recepciÛn ser· de 8 bits.
+		    BCF	    RCSTA,RX9       ;La recepci√≥n ser√° de 8 bits.
 
-;------------------CONFIGURACI”N TX PUERTO SERIE--------------------------------
+;------------------CONFIGURACI√ìN TX PUERTO SERIE--------------------------------
 
-		    BANKSEL TXSTA	    ;CONFIGURACI”N PARA TRANSMISI”N
-		    BCF	    TXSTA,TX9       ;La transmisiÛn ser· de 8 bits.
-		    BCF	    TXSTA,SYNC      ;La transmisiÛn ser· asÌncrona.
-		    BSF	    TXSTA,BRGH      ;La transmisiÛn ser· de alta velocidad.
+		    BANKSEL TXSTA	    ;CONFIGURACI√ìN PARA TRANSMISI√ìN
+		    BCF	    TXSTA,TX9       ;La transmisi√≥n ser√° de 8 bits.
+		    BCF	    TXSTA,SYNC      ;La transmisi√≥n ser√° as√≠ncrona.
+		    BSF	    TXSTA,BRGH      ;La transmisi√≥n ser√° de alta velocidad.
 		    BANKSEL BAUDCTL
 		    BCF	    BAUDCTL,BRG16   ;8 bits para el baud-rate.
 		    BANKSEL SPBRG
 		    MOVLW   .25		    ;Cargamos un '25' en SPBRG para trabajar con 9600 baudios.
 		    MOVWF   SPBRG
 
-;-------------------CONFIGURACI”N DE PUERTOS DE I/O-----------------------------
+;-------------------CONFIGURACI√ìN DE PUERTOS DE I/O-----------------------------
 
 		    BANKSEL TRISA	    ;Seteamos PORTA, PORTC, PORTD y PORTE como salida.
 		    MOVLW   B'10000000'
@@ -99,7 +99,7 @@
 		    CLRF    PORTD
 		    CLRF    PORTE
 
-;-------------------INICIALIZACI”N DE VARIABLES---------------------------------
+;-------------------INICIALIZACI√ìN DE VARIABLES---------------------------------
 
 		    MOVLW   .8		    ;Cargamos '8' en la variable contadora para compases (~500[ms]).
 		    MOVWF   COMPAS
@@ -112,11 +112,11 @@
 		    CLRF    DISPLAY4
 		    CLRF    DISPLAY5
 		    CLRF    DISPLAY6
-		    GOTO    INICIO	    ;Fin de configuraciÛn. Vamos a INICIO.
+		    GOTO    INICIO	    ;Fin de configuraci√≥n. Vamos a INICIO.
 
 ;-------------------TABLAS------------------------------------------------------
 
-  TABLA_DISPLAYS    ADDWF   PCL,1	    ;Tabla para multiplexaciÛn de displays.
+  TABLA_DISPLAYS    ADDWF   PCL,1	    ;Tabla para multiplexaci√≥n de displays.
 		    RETLW   B'11111110'	    ;Prendemos RC0.
 		    RETLW   B'11111101'	    ;Prendemos RC1.
 		    RETLW   B'11111011'	    ;Prendemos RC2.
@@ -144,7 +144,7 @@
 		    ADDWF   FSR,1
 		    MOVF    INDF,0
 		    MOVWF   PORTA
-		    MOVF    DISPLAYMUX,0    ;MultiplexaciÛn de displays.
+		    MOVF    DISPLAYMUX,0    ;Multiplexaci√≥n de displays.
 		    CALL    TABLA_DISPLAYS
 		    MOVWF   PORTC
 		    INCF    DISPLAYMUX,1
@@ -156,13 +156,13 @@
 ;-------------------TEST TX-----------------------------------------------------
 
 		    BTFSC   PORTA,7	    ;Testeamos RA7 para ver activar o desactivar
-		    GOTO    INICIO_RX	    ;la transmisiÛn por puerto serie. Si RA7 est· en '1',
+		    GOTO    INICIO_RX	    ;la transmisi√≥n por puerto serie. Si RA7 est√° en '1',
 		    GOTO    TX_TEST	    ;entonces testeamos el pulsador para RX.
 
 	 TX_TEST    BTFSC   RECEPCION,0	    ;Si estamos recibiendo, no podemos transmitir.
 		    GOTO    INICIO
 		    BTFSC   TRANSMISION,0   ;En base al estado del bit '0' del registro de control
-		    GOTO    TX_OFF	    ;de transmisiÛn, decidimos si usar o dejar de usar el
+		    GOTO    TX_OFF	    ;de transmisi√≥n, decidimos si usar o dejar de usar el
 		    GOTO    TX_ON	    ;el modo 'grabar'.
 		    GOTO    INICIO
 
@@ -195,16 +195,16 @@
        INICIO_RX    BTFSC   TRANSMISION,0   ;Si estamos transmitiendo, no podemos recibir.
 		    GOTO    INICIO
 		    BTFSC   PORTD,7	    ;Testeamos RA7 para ver activar o desactivar
-		    GOTO    INICIO	    ;la recepciÛn por puerto serie. Si RD7 est· en '1',
+		    GOTO    INICIO	    ;la recepci√≥n por puerto serie. Si RD7 est√° en '1',
 		    GOTO    RC_TEST	    ;salimos. Si fue pulsado, decidimos si usar o no RX.
 
-	 RC_TEST    BTFSC   RECEPCION,0	    ;Tomamos la decisiÛn en base al bit '0' del registro
-		    GOTO    RC_OFF	    ;de control de recepciÛn, con el mismo criterio que
-    		    GOTO    RC_ON	    ;para la transmisiÛn.
+	 RC_TEST    BTFSC   RECEPCION,0	    ;Tomamos la decisi√≥n en base al bit '0' del registro
+		    GOTO    RC_OFF	    ;de control de recepci√≥n, con el mismo criterio que
+    		    GOTO    RC_ON	    ;para la transmisi√≥n.
 		    CALL    DELAY300MS	    ;Delay para eliminar rebote de los pulsadores.
 
 	   RC_ON    BSF	    PORTE,0	    ;Si vamos a recibir una partitura, entonces
-		    BCF	    INTCON,T0IE	    ;deshabilitamos el metrÛnomo.
+		    BCF	    INTCON,T0IE	    ;deshabilitamos el metr√≥nomo.
 		    BCF	    PORTE,2
 		    BCF	    METRONOMO,0
 		    BANKSEL PIE1
@@ -219,7 +219,7 @@
 	  RC_OFF    BCF	    PORTE,0	    ;Si queremos dejar de recibir por puerto serie,
 		    BANKSEL PIE1	    ;deshabilitamos todo y habilitamos nuevamente las
 		    BCF	    PIE1,RCIE;	    ;interrupciones por TMR0 para seguir con el
-		    BANKSEL PORTA	    ;metrÛnomo desde donde estaba.
+		    BANKSEL PORTA	    ;metr√≥nomo desde donde estaba.
 		    BCF	    RCSTA,CREN
 		    BCF	    RCSTA,SPEN
 		    BCF	    RECEPCION,0
@@ -228,7 +228,7 @@
 
 ;-------------------DELAY-------------------------------------------------------
 
-      DELAY300MS    MOVLW   .3		    ;Retardo por software de ~300[ms] con la funciÛn
+      DELAY300MS    MOVLW   .3		    ;Retardo por software de ~300[ms] con la funci√≥n
 		    MOVWF   I3		    ;de antirrebote.
           BUCLE3    MOVLW   .131
 		    MOVWF   I2
@@ -242,25 +242,25 @@
 		    GOTO    BUCLE3
 		    RETURN
 
-;-------------------RUTINA INTERRUPCI”N-----------------------------------------
+;-------------------RUTINA INTERRUPCI√ìN-----------------------------------------
 
 	  RUT_IN    MOVWF   W_TEMP          ;Salvamos contexto.
 		    SWAPF   STATUS,W
 		    MOVWF   STATUS_TEMP
-		    BTFSC   INTCON,RBIF	    ;Si la interrupciÛn fue por RB<7:1>, voy a la rutina
-		    GOTO    PORTB_IN	    ;de interrupciÛn por RB<7:1>. 
-		    BTFSC   INTCON,INTF	    ;Si fue por RB0, voy a la de RB0.
+		    BTFSC   INTCON,RBIF	    ;Si la interrupci√≥n fue por RB<7:1>, vamos a la rutina
+		    GOTO    PORTB_IN	    ;de interrupci√≥n por RB<7:1>. 
+		    BTFSC   INTCON,INTF	    ;Si fue por RB0, vamos a la de RB0.
 		    GOTO    RB0_IN
-		    BTFSC   INTCON,T0IF	    ;Si fue por TMR0, voy a la de TMR0.
+		    BTFSC   INTCON,T0IF	    ;Si fue por TMR0, vamos a la de TMR0.
 		    GOTO    TMR0_IN
-		    BTFSC   PIR1,RCIF	    ;Si fue por recepciÛn por puerto serie, voy a la de RX.
+		    BTFSC   PIR1,RCIF	    ;Si fue por recepci√≥n por puerto serie, vamos a la de RX.
 		    GOTO    RECEP_IN
-		    RETFIE		    ;Si fue un falso positivo, vuelvo sin hacer nada.
+		    RETFIE		    ;Si fue un falso positivo, volvemos sin hacer nada.
 
-;-------------------INTERRUPCI”N RB<7:1>----------------------------------------
+;-------------------INTERRUPCI√ìN RB<7:1>----------------------------------------
 
 	PORTB_IN    BTFSC   PORTB,1	    ;Asignamos a W el valor correspondiente a la nota
-		    GOTO    TEST_RB2	    ;seg˙n la tecla presionada. Luego, buscamos en
+		    GOTO    TEST_RB2	    ;seg√∫n la tecla presionada. Luego, buscamos en
 		    MOVLW   .4		    ;la tabla el valor a mostrar.
 		    GOTO    SHOW
 	TEST_RB2    BTFSC   PORTB,2
@@ -287,15 +287,15 @@
 		    GOTO    FIN_RB_IN
 		    MOVLW   .5
 	    SHOW    CALL    TABLA_NOTAS
-		    BTFSS   TRANSMISION,0   ;Si est· activado el modo de transmisiÛn, mostramos
+		    BTFSS   TRANSMISION,0   ;Si est√° activado el modo de transmisi√≥n, mostramos
 		    GOTO    MOSTRAR	    ;la nota por PORTD y la mandamos por el puerto serie.
 		    MOVWF   TXREG
-	 MOSTRAR    MOVWF   PORTD	    ;Si no est· activado el modo de transmisiÛn, sÛlo
+	 MOSTRAR    MOVWF   PORTD	    ;Si no est√° activado el modo de transmisi√≥n, s√≥lo
 		    GOTO    FIN_RB_IN	    ;mostramos la nota por PORTD.
 
-;-------------------INTERRUPCI”N RB0--------------------------------------------
+;-------------------INTERRUPCI√ìN RB0--------------------------------------------
 
-	  RB0_IN    BTFSC   METRONOMO,0	    ;Chequeamos si queremos usar el metrÛnomo
+	  RB0_IN    BTFSC   METRONOMO,0	    ;Chequeamos si queremos usar el metr√≥nomo
 		    GOTO    METRONOMO_OFF   ;o salir del mismo.
 		    GOTO    METRONOMO_ON
 
@@ -304,15 +304,15 @@
 		    BSF	    METRONOMO,0	    ;Si lo queremos usar, activamos las interrupciones
 		    BSF     INTCON,T0IE	    ;por TMR0, cargamos TMR0 con '1' para que cuente ~65[ms]
 		    MOVLW   .1		    ;y cada 8 vueltas (~500[ms]) actualizamos el valor del
-		    MOVWF   TMR0	    ;LED de metrÛnomo.
+		    MOVWF   TMR0	    ;LED de metr√≥nomo.
 		    GOTO    FIN_RB0_IN
 
    METRONOMO_OFF    BCF	    METRONOMO,0	    ;Si lo queremos apagar, limpiamos PORTC para apagar
 		    BCF     PORTE,2	    ;el LED, y desactivamos las interrupciones por TMR0,
-		    BCF     INTCON,T0IE	    ;inhabilitando asÌ el metrÛnomo.
+		    BCF     INTCON,T0IE	    ;inhabilitando as√≠ el metr√≥nomo.
 		    GOTO    FIN_RB0_IN
 
-;-------------------INTERRUPCI”N TMR0-------------------------------------------
+;-------------------INTERRUPCI√ìN TMR0-------------------------------------------
 
 	 TMR0_IN    DECFSZ  COMPAS,1	    ;Contamos ~500[ms] y toggleamos el LED utilizado
 		    GOTO    RELOAD	    ;para marcar el ritmo.
@@ -331,7 +331,7 @@
 		    MOVWF   TMR0
 		    GOTO    FIN_TMR0_IN
 
-;-------------------INTERRUPCI”N RX---------------------------------------------
+;-------------------INTERRUPCI√ìN RX---------------------------------------------
 
 	RECEP_IN    BCF	    PIR1,RCIF
 		    BCF	    PORTE,2
@@ -352,25 +352,25 @@
 		    CLRF    GUARDA_DATO
 		    GOTO    FIN_RX_IN
 
-;-------------------FIN RUTINA INTERRUPCI”N-------------------------------------
+;-------------------FIN RUTINA INTERRUPCI√ìN-------------------------------------
 
-       FIN_RB_IN    MOVF    PORTB,0	    ;Limpiamos flag de interrupciÛn por RB<7:1>,
+       FIN_RB_IN    MOVF    PORTB,0	    ;Limpiamos flag de interrupci√≥n por RB<7:1>,
 		    BCF	    INTCON,RBIF	    ;devolvemos contexto y salimos.
 		    CALL    DEV_CONTEXT
 		    RETFIE
 
       FIN_RB0_IN    CALL    DEV_CONTEXT	    ;Devolvemos contexto, limpiamos flag de
-		    BCF	    INTCON,INTF	    ;interrupciÛn por RB0 y salimos.
+		    BCF	    INTCON,INTF	    ;interrupci√≥n por RB0 y salimos.
 		    RETFIE
 
      FIN_TMR0_IN    CALL    DEV_CONTEXT	    ;Devolvemos contexto, limpiamos flag de
-		    BCF	    INTCON,T0IF	    ;interrupciÛn por TMR0 y salimos.
+		    BCF	    INTCON,T0IF	    ;interrupci√≥n por TMR0 y salimos.
 		    RETFIE
 
        FIN_RX_IN    CALL    DEV_CONTEXT	    ;Devolvemos contexto y salimos.
 		    RETFIE
 
-     DEV_CONTEXT    SWAPF   STATUS_TEMP,W   ;DevolvuciÛn de contexto.
+     DEV_CONTEXT    SWAPF   STATUS_TEMP,W   ;Devoluci√≥n de contexto.
 		    MOVWF   STATUS
 		    SWAPF   W_TEMP,F
 		    SWAPF   W_TEMP,W
